@@ -10,7 +10,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text style={styles.text}>Welcome to my app</Text>
+      <Text className="font-rubik" style={styles.text}>Welcome to my app</Text>
       <Link href="/sign-in">SignIn</Link>
       <Link href="/explore">Explore</Link>
       <Link href="/profile">Profile</Link>
@@ -21,8 +21,9 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   text: {
+
     fontWeight: "bold",
     color: "red",
-    fontSize: 20, // You can adjust the font size as needed
+    fontSize: 40, // You can adjust the font size as needed
   },
 });
