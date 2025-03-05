@@ -1,14 +1,20 @@
-import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images"; // Ensure images.js exports onboarding
 import google from '@/assets/icons/google.png';
 import icons from "@/constants/icons";
+import { login } from "@/lib/appwrite";
 
 const SignIn = () => {
 
-  const handleLogin = () => {
-    console.log("Login");
+  const handleLogin = async () => {
+    const result = await login();
+    if (result) {
+      console.log('Logged in');
+    } else {
+      Alert.alert('Failed to login');
+    }
   };
 
 
@@ -24,26 +30,29 @@ const SignIn = () => {
           <Text style={styles.text4}>
             Login to RealEstate with Google
           </Text>
-          <TouchableOpacity onPress={handleLogin}>
-            <Image src={icons.google} />
+          <TouchableOpacity style={styles.TouchableOpacity} onPress={handleLogin}>
+            <View style={styles.btnContainer}>
+              <Image style={styles.image2} source={icons.google} />
+            <Text>Continue with google</Text>
+            </View>
+            
           </TouchableOpacity>
             
         </View>
-      </ScrollView>
+      </ScrollView>                                                                                                                                           
     </SafeAreaView>
   );
 };
-
 export default SignIn;
 
 const styles = StyleSheet.create({
   safeAreaView: {
     backgroundColor: "white",
-    flex: 1, // Use flex instead of height: '100%'
+    flex: 1, 
   },
   scrollView: {
-    flexGrow: 1, // Allow scrollView to expand naturally
-    alignItems: "center", // Center content horizontally
+    flexGrow: 1, 
+    alignItems: "center", 
   },
   image: {
     width: "100%",
@@ -77,22 +86,32 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   TouchableOpacity: {
-    backgroundColor: "white", // bg-white
-    shadowColor: "#d4d4d8", // shadow-zinc-300
-    shadowOffset: { width: 0, height: 2 }, // shadow-md equivalent
+    backgroundColor: "#0D4BD1FF",
+    shadowColor: "#C2C6CCFF", 
+    shadowOffset: { width: 0, height: 2 }, 
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 3, // Needed for Android shadows
-    borderRadius: 9999, // rounded-full
-    width: "100%", // w-full
-    paddingVertical: 16, // py-4 (4 * 4px = 16px)
-    marginTop: 20, // mt-5 (5 * 4px = 20px)
-    alignItems: "center", 
+    elevation: 3, 
+    borderRadius: 9999, 
+    width: 350, 
+    paddingVertical: 16, 
+    marginTop:20, 
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+  
   },
   image2: {
-    width: 5,
-    height: 5,
+    width: 20,
+    height: 20,
     resizeMode: "contain",
+    alignSelf:"center"
+  },
+  btnContainer:{
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
   }
   
 });
