@@ -11,7 +11,7 @@ export default function Index() {
       }}
     >
       <Text className="font-rubik" style={styles.text}>Welcome to my app</Text>
-      <Link href="/sign-in">SignIn</Link>
+     <Link href="/sign-in">SignIn</Link>
       <Link href="/explore">Explore</Link>
       <Link href="/profile">Profile</Link>
       <Link href="properties/1">Property</Link>
@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
 
     fontWeight: "bold",
     color: "red",
-    fontSize: 40, // You can adjust the font size as needed
+    fontSize: 40, 
   },
 });

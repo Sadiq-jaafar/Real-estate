@@ -1,12 +1,15 @@
 import { Account, Avatars, Client, OAuthProvider } from 'react-native-appwrite';
 import * as Linking from 'expo-linking';
-import {openAuthSessionAsync} from 'expo-web-browser';
+import { openAuthSessionAsync } from 'expo-web-browser';
+import * as AuthSession from 'expo-auth-session';
+import { Platform } from 'react-native';
 
 export const config = {
     platform: 'com.Real-estate',
-    endpoint: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
-    projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
-}
+    endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT || 'https://cloud.appwrite.io/v1',
+    projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID || '',
+};
+
 
 export const client = new Client();
 
@@ -45,6 +48,39 @@ export async function login() {
     }
 }
 
+
+
+// export async function login() {
+//     try {
+//         // ✅ Fix: Use correct redirect URI allowed in Appwrite Console
+//         const redirectUri =
+//             Platform.OS === 'web' 
+//                 ? 'https://cloud.appwrite.io/v1/account/sessions/oauth2/callback'
+//                 : AuthSession.makeRedirectUri({ native: 'exp://127.0.0.1:19000' });
+
+//         const response = await account.createOAuth2Token(OAuthProvider.Google, redirectUri);
+//         if (!response) throw new Error('Failed to login');
+
+//         const result = await openAuthSessionAsync(response.toString(), redirectUri);
+
+//         if (result.type !== 'success') throw new Error('Failed to login');
+
+//         const url = new URL(result.url);
+//         const secret = url.searchParams.get('secret')?.toString();
+//         const userId = url.searchParams.get('userId')?.toString();
+        
+//         if (!secret || !userId) throw new Error('Failed to login');
+
+//         const session = await account.createSession(userId, secret);
+//         if (!session) throw new Error('Failed to return session');
+
+//         return true;
+//     } catch (error) {
+//         console.error(error);
+//         return false;
+//     }
+// }
+
 export async function logout() {
     try {
         await account.deleteSession('current');
@@ -55,7 +91,7 @@ export async function logout() {
     }
 }
 
-export async function getUser() {
+export async function getCurrentUser() {
     try {
         const response = await account.get();
         if (response.$id) {
@@ -68,3 +104,4 @@ export async function getUser() {
         return null;
     }
 }
+

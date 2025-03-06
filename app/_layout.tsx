@@ -3,6 +3,7 @@ import "./global.css";
 import { useFonts } from 'expo-font';
 import { SplashScreen } from 'expo-router';
 import { useEffect } from "react";
+import GlobalProvider from "@/lib/global-provider";
 
 // Prevent the splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -26,5 +27,9 @@ export default function RootLayout() {
 
   if (!fontsLoaded)  return null;  
  
-  return <Stack screenOptions={{headerShown:false}} />;
+  return (
+    <GlobalProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </GlobalProvider>
+  );
 }

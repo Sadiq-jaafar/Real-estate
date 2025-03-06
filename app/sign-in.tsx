@@ -5,45 +5,51 @@ import images from "@/constants/images"; // Ensure images.js exports onboarding
 import google from '@/assets/icons/google.png';
 import icons from "@/constants/icons";
 import { login } from "@/lib/appwrite";
+import { useGlobalContext } from "@/lib/global-provider";
+import { Redirect, useRouter } from "expo-router";
 
-const SignIn = () => {
+// const SignIn = () => {
 
-  const handleLogin = async () => {
-    const result = await login();
-    if (result) {
-      console.log('Logged in');
-    } else {
-      Alert.alert('Failed to login');
-    }
-  };
+  // const {refetch , isLoggedin, loading} = useGlobalContext();
+
+  // if (!loading && isLoggedin) return < Redirect href="/"/>
+
+  // const handleLogin = async () => {
+  //   const result = await login();
+  //   if (result) {
+  //     console.log("loggedin");
+  //   } else {
+  //     Alert.alert('Failed to login');
+  //   }
+  // };
 
 
-  return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <Image source={images.onboarding} style={styles.image} />
-        <View style={styles.view1}>
-          <Text style={styles.text1}>Welcome to the App</Text>
-          <Text style={styles.text2}>
-            Let's you closer to {"\n"} <Text style={styles.text3}>your dream home</Text>
-          </Text>
-          <Text style={styles.text4}>
-            Login to RealEstate with Google
-          </Text>
-          <TouchableOpacity style={styles.TouchableOpacity} onPress={handleLogin}>
-            <View style={styles.btnContainer}>
-              <Image style={styles.image2} source={icons.google} />
-            <Text>Continue with google</Text>
-            </View>
+//   return (
+//     <SafeAreaView style={styles.safeAreaView}>
+//       <ScrollView contentContainerStyle={styles.scrollView}>
+//         <Image source={images.onboarding} style={styles.image} />
+//         <View style={styles.view1}>
+//           <Text style={styles.text1}>Welcome to the App</Text>
+//           <Text style={styles.text2}>
+//             Let's you closer to {"\n"} <Text style={styles.text3}>your dream home</Text>
+//           </Text>
+//           <Text style={styles.text4}>
+//             Login to RealEstate with Google
+//           </Text>
+//           <TouchableOpacity style={styles.TouchableOpacity} onPress={handleLogin}>
+//             <View style={styles.btnContainer}>
+//               <Image style={styles.image2} source={icons.google} />
+//             <Text>Continue with google</Text>
+//             </View>
             
-          </TouchableOpacity>
+//           </TouchableOpacity>
             
-        </View>
-      </ScrollView>                                                                                                                                           
-    </SafeAreaView>
-  );
-};
-export default SignIn;
+//         </View>
+//       </ScrollView>                                                                                                                                           
+//     </SafeAreaView>
+//   );
+// };
+// export default SignIn;
 
 const styles = StyleSheet.create({
   safeAreaView: {
@@ -115,3 +121,42 @@ const styles = StyleSheet.create({
   }
   
 });
+
+export default function SignIn() {
+  const {refetch , isLoggedin, loading} = useGlobalContext();
+
+  if (!loading && isLoggedin) return < Redirect href="/"/>
+
+  const handleLogin = async () => {
+    return < Redirect href="/"/>
+  //   const router = useRouter();
+   
+  // router.push('../tabs/index');
+  };
+
+
+  return (
+        <SafeAreaView style={styles.safeAreaView}>
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <Image source={images.onboarding} style={styles.image} />
+        <View style={styles.view1}>
+          <Text style={styles.text1}>Welcome to the App</Text>
+          <Text style={styles.text2}>
+            Let's you closer to {"\n"} <Text style={styles.text3}>your dream home</Text>
+          </Text>
+          <Text style={styles.text4}>
+            Login to RealEstate with Google
+          </Text>
+          <TouchableOpacity style={styles.TouchableOpacity} onPress={handleLogin}>
+            <View style={styles.btnContainer}>
+              <Image style={styles.image2} source={icons.google} />
+            <Text>Continue with google</Text>
+            </View>
+            
+          </TouchableOpacity>
+            
+        </View>
+      </ScrollView>                                                                                                                                           
+    </SafeAreaView>
+  )
+}
