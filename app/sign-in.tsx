@@ -128,10 +128,13 @@ export default function SignIn() {
   if (!loading && isLoggedin) return < Redirect href="/"/>
 
   const handleLogin = async () => {
-    return < Redirect href="/"/>
-  //   const router = useRouter();
-   
-  // router.push('../tabs/index');
+    const result = await login();
+    if (result) {
+      refetch()
+    } else {
+      Alert.alert('Failed to login');
+      
+    }
   };
 
 

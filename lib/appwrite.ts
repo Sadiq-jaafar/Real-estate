@@ -5,9 +5,9 @@ import * as AuthSession from 'expo-auth-session';
 import { Platform } from 'react-native';
 
 export const config = {
-    platform: 'com.Real-estate',
+    platform: 'com.Real_estate',
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT || 'https://cloud.appwrite.io/v1',
-    projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID || '',
+    projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID || '67c838a3003d70403b66',
 };
 
 
@@ -48,6 +48,28 @@ export async function login() {
     }
 }
 
+
+// export async function login() {
+//   try {
+//     const redirectUri = "http://localhost:3000/";
+    
+//     // Create OAuth2 session with success/failure URLs
+//     const session = await account.createOAuth2Session(
+//       OAuthProvider.Google,
+//       redirectUri, // Success URL
+//       redirectUri  // Failure URL
+//     );
+
+//     // Open browser session
+//     const authUrl = session?.url || session.toString();
+//     const browserResult = await openAuthSessionAsync(authUrl, redirectUri);
+
+//     // ... rest of your code ...
+//   } catch (error) {
+//     console.error(error);
+//     return false;
+//   }
+// }
 
 
 // export async function login() {
