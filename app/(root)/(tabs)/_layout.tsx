@@ -7,7 +7,7 @@ import { View, Text, Image } from 'react-native';
 
 interface TabIconProps {
   focused: boolean;
-  icon: any; // Can be more specific with ImageSourcePropType
+  icon: any; 
   title: string;
   color?: string;
 }
@@ -19,7 +19,7 @@ export default function TabLayot() {
             tabBarShowLabel: false,
             tabBarStyle: {
                 backgroundColor: 'white',
-                position: 'absolute',
+                position: 'relative',
                 minHeight: 60,
                 shadowOpacity: 0,
                 borderTopWidth: 1,
@@ -70,9 +70,9 @@ const TabIcon = ({ focused, icon, title }: TabIconProps) => (
       source={icon}
       tintColor={focused ? "#0061FF" : "#666876"}
       resizeMode="contain"
-      style={{ width: 30, height: 30 }}
+      style={{ width: 30, height: 30 , marginTop:10}}
     />
-    <Text style={{ color: focused ? "#0061FF" : "#666876", fontSize: 10, marginTop: 4 }}>
+    <Text style={{ color: focused ? "#0061FF" : "#666876", fontSize: 10, marginTop: 1 , width:"100%"}}>
       {title}
     </Text>
   </View>
