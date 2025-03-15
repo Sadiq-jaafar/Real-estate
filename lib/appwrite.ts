@@ -1,4 +1,4 @@
-import { Account, Avatars, Client, OAuthProvider } from 'react-native-appwrite';
+import { Account, Avatars, Client, Databases, OAuthProvider } from 'react-native-appwrite';
 import * as Linking from 'expo-linking';
 import { openAuthSessionAsync } from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
@@ -8,6 +8,11 @@ export const config = {
     platform: 'com.Real_estate',
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT || 'https://cloud.appwrite.io/v1',
     projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID || '67c838a3003d70403b66',
+    DatabaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
+    galleriesCollectionId: process.env.EXPO_PUBLIC_APPWRITE_GALLERIES_COLLECTION_ID,
+    reviewsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_REVIEWS_COLLECTION_ID,
+    agentsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_COLLECTION_ID,
+    propertiesCollectionId: process.env.EXPO_PUBLIC_APPWRITE_PROPERTIES_COLLECTION_ID, 
 };
 
 
@@ -20,6 +25,8 @@ client
 
 export const avatar = new Avatars(client);
 export const account = new Account(client);
+export const databases = new Databases(client);
+
 
 export async function login() {
     try {

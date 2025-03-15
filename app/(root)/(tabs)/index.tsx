@@ -3,58 +3,74 @@ import Filters from "@/components/Filters";
 import Search from "@/components/Search";
 import icons from "@/constants/icons";
 import images from "@/constants/images";
-import { Link } from "expo-router";
-import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useGlobalContext } from "@/lib/global-provider";
+import { Text, View, StyleSheet, TouchableOpacity, Image, FlatList, Button } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { avatar } from '../../../lib/appwrite';
+import seed from "@/lib/seed";
 
 export default function Index() {
+  const { user } = useGlobalContext();
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        {/* Header Section */}
-        <View style={styles.headerTop}>
-          <View style={styles.userInfo}>
-            <Image source={images.avatar} style={styles.avatar} />
-            <View style={styles.userTextContainer}>
-              <Text style={styles.greetingText}>Hello, User</Text>
-              <Text style={styles.usernameText}>Hello, User</Text>
+      <Button  title="Seed" onPress={seed}></Button>
+      <FlatList
+        data={[1, 2, 3, 4]}
+        renderItem={({ item }) => <Card />}
+        keyExtractor={(item) => item.toString()}
+        numColumns={2}
+        contentContainerStyle={styles.mainListContent}
+        columnWrapperStyle={styles.columnWrapper}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <View style={styles.header}>
+            {/* Header Section */}
+            <View style={styles.headerTop}>
+              <View style={styles.userInfo}>
+                <Image source={{uri: user?.avatar}} style={styles.avatar} />
+                <View style={styles.userTextContainer}>
+                  <Text style={styles.greetingText}>Hello, User</Text>
+                  <Text style={styles.usernameText}>{user?.name }</Text>
+                </View>
+              </View>
+              <Image source={icons.bell} style={styles.bellIcon} />
+            </View>
+
+            {/* Search Bar */}
+            <Search />
+
+            {/* Featured Section */}
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>Featured</Text>
+                <TouchableOpacity>
+                  <Text style={styles.seeAllText}>See All</Text>
+                </TouchableOpacity>
+              </View>
+              <FlatList
+                data={[1, 2, 3]}
+                renderItem={({ item }) => <FeaturedCard />}
+                keyExtractor={(item) => item.toString()}
+                horizontal
+                bounces={false}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.featuredListContent}
+              />
+            </View>
+
+            {/* Recommendations Section */}
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>Our Recommendation</Text>
+                <TouchableOpacity>
+                  <Text style={styles.seeAllText}>See All</Text>
+                </TouchableOpacity>
+              </View>
+              <Filters />
             </View>
           </View>
-          <Image source={icons.bell} style={styles.bellIcon} />
-        </View>
-
-        {/* Search Bar */}
-        <Search />
-
-        {/* Featured Section */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Featured</Text>
-            <TouchableOpacity>
-              <Text style={styles.seeAllText}>See All</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.featuredCardsContainer}>
-            <FeaturedCard />
-            <FeaturedCard />
-          </View>
-        </View>
-
-        {/* Recommendations Section */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Our Recommendation</Text>
-            <TouchableOpacity>
-              <Text style={styles.seeAllText}>See All</Text>
-            </TouchableOpacity>
-          </View>
-          <Filters/>
-          <View style={styles.recommendationCardsContainer}>
-            <Card />
-            <Card />
-          </View>
-        </View>
-      </View>
+        }
+      />
     </SafeAreaView>
   );
 }
@@ -64,14 +80,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
+  mainListContent: {
+    paddingBottom: 16,
+  },
+  columnWrapper: {
+    gap: 8,
+    paddingHorizontal: 12,
+  },
   header: {
-    padding: 12, // Further reduced padding
+    padding: 12,
   },
   headerTop: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 8, // Further reduced margin
+    marginTop: 4,
   },
   userInfo: {
     flexDirection: "row",
@@ -100,31 +123,30 @@ const styles = StyleSheet.create({
     height: 24,
   },
   section: {
-    marginVertical: 8, // Further reduced margin
+    marginVertical: 8,
   },
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: 4,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: 'Rubik-Bold',
     color: '#000000',
   },
   seeAllText: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Rubik-Bold',
     color: '#93C5FD',
   },
-  featuredCardsContainer: {
-    flexDirection: "row",
-    gap: 8, // Further reduced gap
-    marginTop: 8, // Further reduced margin
+  featuredListContent: {
+    gap: 8,
+    marginTop: 8,
+    paddingHorizontal: 12,
   },
   recommendationCardsContainer: {
-    flexDirection: "row",
-    marginTop: 8, // Further reduced margin
-    gap: 8, // Further reduced gap
+    paddingHorizontal: 12,
   },
 });
