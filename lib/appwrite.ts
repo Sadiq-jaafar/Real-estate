@@ -1,4 +1,4 @@
-import { Account, Avatars, Client, Databases, OAuthProvider } from 'react-native-appwrite';
+import { Account, Avatars, Client, Databases, OAuthProvider, Query } from 'react-native-appwrite';
 import * as Linking from 'expo-linking';
 import { openAuthSessionAsync } from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
@@ -8,7 +8,7 @@ export const config = {
     platform: 'com.Real_estate',
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT || 'https://cloud.appwrite.io/v1',
     projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID || '67c838a3003d70403b66',
-    DatabaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
+    DatabaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID|| "67d58d97003e5ba89abe",
     galleriesCollectionId: process.env.EXPO_PUBLIC_APPWRITE_GALLERIES_COLLECTION_ID,
     reviewsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_REVIEWS_COLLECTION_ID,
     agentsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_COLLECTION_ID,
@@ -134,3 +134,60 @@ export async function getCurrentUser() {
     }
 }
 
+export async function getLatestProperties() {
+    try {
+        const result = await databases.listDocuments(
+            config.DatabaseId!,
+            config.propertiesCollectionId!,
+            [Query.orderAsc("$createdAt"), Query.limit(5)],
+
+        )
+        return result.documents;
+        
+    } catch (error) {
+        console.error(error)
+        return [];
+        
+    }
+    
+}
+
+export async function getProperties({ filter, query, limit }: {
+    filter: string;
+    query: string;
+    limit?: number;
+}) {
+    try {
+        const buildQuery = [Query.orderDesc("$createdAt")];
+
+        if (filter && filter != 'All')
+        { buildQuery.push(Query.equal('type', filter)) }
+
+        if (query) {
+            buildQuery.push(
+                Query.or([
+                    Query.search("name", query),
+                    Query.search("address", query),
+                    Query.search("type", query),
+                    
+                ])
+            )
+        }
+        if (limit) buildQuery.push(
+            Query.limit(limit)
+        )
+        const result = await databases.listDocuments(
+            config.DatabaseId!,
+            config.propertiesCollectionId!,
+            buildQuery,
+
+        )
+        return result.documents;
+        
+        
+    } catch (error) {
+        console.error(error);
+        return [];
+        
+    }
+}

@@ -18,7 +18,7 @@ const propertyTypes = [
   "House",
   "Townhouse",
   "Condo",
-  "Duplexe",
+  "Duplex",
   "Studio",
   "Villa",
   "Apartment",
@@ -73,12 +73,12 @@ async function seed() {
     for (const key in COLLECTIONS) {
       const collectionId = COLLECTIONS[key as keyof typeof COLLECTIONS];
       const documents = await databases.listDocuments(
-        config.databaseId!,
+        config.DatabaseId!,
         collectionId!
       );
       for (const doc of documents.documents) {
         await databases.deleteDocument(
-          config.databaseId!,
+          config.DatabaseId!,
           collectionId!,
           doc.$id
         );
@@ -91,7 +91,7 @@ async function seed() {
     const agents = [];
     for (let i = 1; i <= 5; i++) {
       const agent = await databases.createDocument(
-        config.databaseId!,
+        config.DatabaseId!,
         COLLECTIONS.AGENT!,
         ID.unique(),
         {
@@ -108,7 +108,7 @@ async function seed() {
     const reviews = [];
     for (let i = 1; i <= 20; i++) {
       const review = await databases.createDocument(
-        config.databaseId!,
+        config.DatabaseId!,
         COLLECTIONS.REVIEWS!,
         ID.unique(),
         {
@@ -126,7 +126,7 @@ async function seed() {
     const galleries = [];
     for (const image of galleryImages) {
       const gallery = await databases.createDocument(
-        config.databaseId!,
+        config.DatabaseId!,
         COLLECTIONS.GALLERY!,
         ID.unique(),
         { image }
@@ -155,7 +155,7 @@ async function seed() {
             ];
 
       const property = await databases.createDocument(
-        config.databaseId!,
+        config.DatabaseId!,
         COLLECTIONS.PROPERTY!,
         ID.unique(),
         {

@@ -1,28 +1,30 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Module } from 'react-native';
 import React from 'react';
 import images from '@/constants/images';
 import icons from '@/constants/icons';
+import { Models } from 'react-native-appwrite';
 
 interface Props {
+  item: Models.Document
   onPress?: () => void;
 }
 
-export const FeaturedCard = ({ onPress }: Props) => {
+export const FeaturedCard = ({item, onPress }: Props) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.featuredCard}>
-      <Image source={images.japan} style={styles.image} />
+      <Image source={{uri: item.image}} style={styles.image} />
       <Image source={images.cardGradient} style={styles.image2} />
       <View style={styles.ratingContainer}>
         <Image source={icons.star} style={styles.starIcon} />
-        <Text style={styles.ratingText}>4.4</Text>
+        <Text style={styles.ratingText}>{item.rating }</Text>
       </View>
       <View style={styles.detailsContainer}>
         <Text style={styles.title} numberOfLines={1}>
-          Modern Apartment
+          {item.name}
         </Text>
-        <Text style={styles.address}>No. 22 Dan-raka samaru</Text>
+        <Text style={styles.address}>{item.adress}</Text>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>$2,500</Text>
+          <Text style={styles.price}>{item.price}</Text>
           <Image source={icons.heart} style={styles.heartIcon} />
         </View>
       </View>
@@ -30,13 +32,13 @@ export const FeaturedCard = ({ onPress }: Props) => {
   );
 };
 
-export const Card = ({ onPress }: Props) => {
+export const Card = ({ item, onPress }: Props) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.card}>
       {/* Image Container */}
       <View style={styles.imageContainer}>
         <Image 
-          source={images.japan} 
+          source={{uri: item.image}} 
           style={styles.cardImage} 
         />
          </View>
@@ -44,7 +46,7 @@ export const Card = ({ onPress }: Props) => {
         {/* Rating Badge - Centered */}
         <View style={styles.centeredRatingContainer}>
           <Image source={icons.star} style={styles.starIconSmall} />
-          <Text style={styles.ratingTextSmall}>4.4</Text>
+        <Text style={styles.ratingTextSmall}>{ item.rating}</Text>
         </View>
      
 
@@ -53,9 +55,9 @@ export const Card = ({ onPress }: Props) => {
         <Text style={styles.titleSmall} numberOfLines={1}>
           Cozy Studio
         </Text>
-        <Text style={styles.addressSmall}>No. 22 Dan-raka samaru</Text>
+        <Text style={styles.addressSmall}>{ item.address}</Text>
         <View style={styles.priceContainerSmall}>
-          <Text style={styles.priceSmall}>$2,500</Text>
+          <Text style={styles.priceSmall}>{ item.price}</Text>
           <Image source={icons.heart} style={styles.heartIconSmall} />
         </View>
       </View>
