@@ -53,7 +53,7 @@ export const Card = ({ item, onPress }: Props) => {
       {/* Card Details */}
       <View style={styles.detailsContainerSmall}>
         <Text style={styles.titleSmall} numberOfLines={1}>
-          Cozy Studio
+          {item.name}
         </Text>
         <Text style={styles.addressSmall}>{ item.address}</Text>
         <View style={styles.priceContainerSmall}>
