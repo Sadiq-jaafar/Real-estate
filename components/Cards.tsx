@@ -22,9 +22,9 @@ export const FeaturedCard = ({item, onPress }: Props) => {
         <Text style={styles.title} numberOfLines={1}>
           {item.name}
         </Text>
-        <Text style={styles.address}>{item.adress}</Text>
+        <Text style={styles.address}>{item.address}</Text>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>{item.price}</Text>
+          <Text style={styles.price}>${item.price}</Text>
           <Image source={icons.heart} style={styles.heartIcon} />
         </View>
       </View>
@@ -57,7 +57,7 @@ export const Card = ({ item, onPress }: Props) => {
         </Text>
         <Text style={styles.addressSmall}>{ item.address}</Text>
         <View style={styles.priceContainerSmall}>
-          <Text style={styles.priceSmall}>{ item.price}</Text>
+          <Text style={styles.priceSmall}>${ item.price}</Text>
           <Image source={icons.heart} style={styles.heartIconSmall} />
         </View>
       </View>

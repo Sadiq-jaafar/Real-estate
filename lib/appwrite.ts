@@ -191,3 +191,17 @@ export async function getProperties({ filter, query, limit }: {
         
     }
 }
+
+export async function getPropertiesById({ id }: { id: string }) {
+     try {
+         const result = await databases.getDocument(
+             config.DatabaseId,
+             config.propertiesCollectionId!,
+             id,
+        )
+     } catch (error) {
+         console.error(error); 
+         return null
+     }
+    
+ }
