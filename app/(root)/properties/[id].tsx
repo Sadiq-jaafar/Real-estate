@@ -180,7 +180,7 @@ const Property = () => {
           </View>
 
           {/* Features Grid */}
-          <View style={styles.featuresContainer}>
+          <View >
             {/* Add your features here */}
           </View>
 
@@ -314,5 +314,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
+// test
 export default Property;
